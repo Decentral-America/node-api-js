@@ -117,7 +117,7 @@ export function addStateUpdateField(transaction: TTransaction & WithApiMixin & I
     } else return transaction
 }
 
-export function makeStateUpdate(stateChanges: TStateChanges, payment: TPayment[], dApp: string | undefined, sender: string): TStateUpdate {
+export function makeStateUpdate(stateChanges: TStateChanges, payment: TPayment[], dApp: string, sender: string): TStateUpdate {
     const payments = payment.map(payment => ({ payment, dApp, sender }))
     const addField = (array: any[], fieldName: string) => array.map(item => ({ ...item, [fieldName]: dApp }))
     const transfers = addField(stateChanges.transfers, 'sender')
@@ -212,6 +212,6 @@ export function makeStateUpdate(stateChanges: TStateChanges, payment: TPayment[]
         }
     }
 
-    recursiveFunction(stateChanges, sender)
+    recursiveFunction(stateChanges, dApp)
     return stateUpdate
 }
