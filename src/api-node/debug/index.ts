@@ -1,10 +1,10 @@
 import request from '../../tools/request';
 import {TLong} from '../../interface';
 import query from '../../tools/query';
-import {AssetDecimals, DataTransactionEntry, Transaction, WithId} from '@waves/ts-types';
+import {AssetDecimals, DataTransactionEntry, Transaction, WithId} from '@decentralchain/ts-types';
 
 /**
- * Waves balance history
+ * DecentralChain balance history
  * @param base
  * @param address
  */
@@ -117,7 +117,7 @@ export function fetchStateChangesByTxId(base: string, txId: string, options: Req
 }
 
 // @TODO need API key:
-// GET /debug/stateWaves/{height}
+// GET /debug/stateDcc/{height}
 // POST /debug/rollback
 // DELETE /debug/rollback-to/{id}
 // GET /debug/portfolios/{address}

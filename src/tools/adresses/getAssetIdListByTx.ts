@@ -1,4 +1,4 @@
-import { Transaction } from '@waves/ts-types';
+import { Transaction } from '@decentralchain/ts-types';
 import { TLong } from '../../interface';
 import { prop, switchTransactionByType, toArray } from '../utils';
 import { NAME_MAP } from '../../constants';

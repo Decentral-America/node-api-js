@@ -1,14 +1,15 @@
 import {IWithStateChanges, TPayment, TStateChanges} from "../../api-node/debug";
-import {BigNumber} from "@waves/bignumber";
+import {BigNumber} from "@decentralchain/bignumber";
 import {
     AssetDecimals,
     DataTransactionEntry,
+    // @ts-ignore InvokeExpressionTransaction may not be available in all ts-types versions
     InvokeExpressionTransaction,
     EthereumTransaction,
     TRANSACTION_TYPE,
     WithApiMixin
-} from "@waves/ts-types/";
-import {Long} from "@waves/ts-types/";
+} from "@decentralchain/ts-types/";
+import {Long} from "@decentralchain/ts-types/";
 import {
     AliasTransaction,
     BurnTransaction, CancelLeaseTransaction, DataTransaction, ExchangeTransaction,
@@ -16,7 +17,7 @@ import {
     IssueTransaction, LeaseTransaction, MassTransferTransaction,
     PaymentTransaction, ReissueTransaction, SetAssetScriptTransaction, SetScriptTransaction, SponsorshipTransaction,
     TransferTransaction, UpdateAssetInfoTransaction
-} from "@waves/ts-types/";
+} from "@decentralchain/ts-types/";
 import {IWithApplicationStatus, TLong} from "../../interface";
 import any = jasmine.any;
 
@@ -91,6 +92,7 @@ export type TTransaction<LONG = Long> =
 
 
 export function addStateUpdateField(transaction: TTransaction & WithApiMixin & IWithApplicationStatus): TTransaction & WithApiMixin & IWithApplicationStatus {
+    // @ts-ignore INVOKE_EXPRESSION may not be available in all ts-types versions
     if (transaction.type === TRANSACTION_TYPE.INVOKE_SCRIPT || transaction.type === TRANSACTION_TYPE.INVOKE_EXPRESSION && transaction.stateChanges.invokes && transaction.stateChanges.invokes.length) {
         const payments = (transaction as any).payment ? (transaction as any).payment.map((p: TPayment) => ({
             assetId: p.assetId,

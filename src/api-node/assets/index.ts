@@ -1,5 +1,5 @@
 import {TLong} from '../../interface';
-import {AssetDecimals, IssueTransaction, SignedTransaction, TRANSACTION_TYPE, WithApiMixin} from '@waves/ts-types';
+import {AssetDecimals, IssueTransaction, SignedTransaction, TRANSACTION_TYPE, WithApiMixin} from '@decentralchain/ts-types';
 import request from '../../tools/request';
 import {toArray} from '../../tools/utils';
 
@@ -123,7 +123,7 @@ export async function fetchAssetsBalance(base: string, address: string, options:
             version: 3,
             type: TRANSACTION_TYPE.ISSUE,
             chainId: 0
-        };
+        } as any;
     });
 
     return balancesResponse;

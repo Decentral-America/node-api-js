@@ -1,4 +1,4 @@
-import { DataTransactionEntry, ExchangeTransactionOrder, TransactionMap } from '@waves/ts-types';
+import { DataTransactionEntry, ExchangeTransactionOrder, TransactionMap } from '@decentralchain/ts-types';
 
 type TGetLongKeys<T> = {
     [Key in keyof T]: T[Key] extends 'LONG' ? Key : T[Key] extends Record<'string', any> ? TGetLongKeys<T[Key]> : never;
@@ -10,7 +10,7 @@ type TFieldsToReplace = TGetLongKeys<DataTransactionEntry<'LONG'>> | TGetLongKey
     }[keyof TransactionMap<'LONG'>[Type]]
 }[keyof TransactionMap<'LONG'>] extends infer A ? A extends undefined ? never : A : never;
 
-const FIELDS: Array<TFieldsToReplace> = ['amount', 'matcherFee', 'price', 'fee', 'minSponsoredAssetFee', 'quantity', 'sellMatcherFee', 'buyMatcherFee'];
+const FIELDS: Array<TFieldsToReplace> = ['amount', 'matcherFee', 'price', 'fee', 'minSponsoredAssetFee' as any, 'quantity', 'sellMatcherFee', 'buyMatcherFee'];
 
 export default function <T extends Record<string, any>>(data: T): string {
     return JSON.stringify(data, function (key, value) {
