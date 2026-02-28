@@ -1,4 +1,4 @@
-import {TLong} from '../../interface';
+import { TLong } from '../../interface';
 import request from '../../tools/request';
 
 /**
@@ -7,8 +7,12 @@ import request from '../../tools/request';
  * @param base
  * @param address
  */
-export function fetchGeneratingBalance(base: string, address: string, options: RequestInit = Object.create(null)): Promise<IGeneratingBalance<TLong>> {
-    return request({base, url: `/consensus/generatingbalance/${address}`});
+export function fetchGeneratingBalance(
+  base: string,
+  address: string,
+  _options: RequestInit = Object.create(null),
+): Promise<IGeneratingBalance<TLong>> {
+  return request({ base, url: `/consensus/generatingbalance/${address}` });
 }
 
 /**
@@ -17,7 +21,7 @@ export function fetchGeneratingBalance(base: string, address: string, options: R
  * @param base
  */
 export function fetchBasetarget(base: string): Promise<IBasetarget> {
-    return request({base, url: '/consensus/basetarget'});
+  return request({ base, url: '/consensus/basetarget' });
 }
 
 /**
@@ -26,30 +30,30 @@ export function fetchBasetarget(base: string): Promise<IBasetarget> {
  * @param base
  */
 export function fetchConsensusAlgo(base: string): Promise<IConsensusAlgo> {
-    return request({base, url: '/consensus/algo'});
+  return request({ base, url: '/consensus/algo' });
 }
 
 export interface IGeneratingBalance<LONG> {
-    address: string;
-    balance: LONG;
+  address: string;
+  balance: LONG;
 }
 
 export interface IBasetarget {
-    baseTarget: number;
+  baseTarget: number;
 }
 
 export interface IConsensusAlgo {
-    consensusAlgo: string;
+  consensusAlgo: string;
 }
 
 export interface IGeneraationSignatureBlockId {
-    generationSignature: string;
+  generationSignature: string;
 }
 
 export interface IBaseTargetBlockId {
-    baseTarget: number;
+  baseTarget: number;
 }
 
 export interface IGenerationSignature {
-    generationSignature: string;
+  generationSignature: string;
 }

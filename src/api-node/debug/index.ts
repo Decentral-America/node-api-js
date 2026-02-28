@@ -1,84 +1,88 @@
 import request from '../../tools/request';
-import {TLong} from '../../interface';
+import { TLong } from '../../interface';
 import query from '../../tools/query';
-import {AssetDecimals, DataTransactionEntry, Transaction, WithId} from '@decentralchain/ts-types';
+import { AssetDecimals, DataTransactionEntry, Transaction, WithId } from '@decentralchain/ts-types';
 
 /**
  * DecentralChain balance history
  * @param base
  * @param address
  */
-export function fetchBalanceHistory(base: string, address: string, options: RequestInit = Object.create(null)): Promise<Array<IBalanceHistory>> {
-    return request({
-        base,
-        url: `/debug/balances/history/${address}`,
-        options
-    });
+export function fetchBalanceHistory(
+  base: string,
+  address: string,
+  options: RequestInit = Object.create(null),
+): Promise<Array<IBalanceHistory>> {
+  return request({
+    base,
+    url: `/debug/balances/history/${address}`,
+    options,
+  });
 }
 
 interface IBalanceHistory {
-    height: number;
-    balance: TLong;
+  height: number;
+  balance: TLong;
 }
 
 export type TPayment = {
-    assetId: string | null,
-    amount: TLong
-}
+  assetId: string | null;
+  amount: TLong;
+};
 
 export type TStateChanges = {
-    data: DataTransactionEntry[],
-    transfers: {
-        address: string,
-        amount: TLong,
-        asset: string | null
-    }[],
-    issues: {
-        assetId: string,
-        name: string,
-        description: string,
-        quantity: TLong,
-        decimals: AssetDecimals,
-        isReissuable: boolean,
-        compiledScript: null | string,
-        nonce: TLong
-    }[],
-    reissues: {
-        assetId: string,
-        isReissuable: boolean,
-        quantity: TLong
-    }[],
-    burns: {
-        assetId: string,
-        quantity: TLong
-    }[],
-    sponsorFees: {
-        assetId: string,
-        minSponsoredAssetFee: TLong
-    }[],
-    leases: {
-        leaseId: string,
-        recipient: string,
-        amount: TLong
-    }[],
-    leaseCancels: { leaseId: string }[],
-    invokes: ({
-        dApp: string,
-        call: {
-            function: string,
-            args: { type: string, value: string }[],
-        },
-        payment: TPayment[],
-        stateChanges: TStateChanges
-    })[]
-    error?: {
-        code: number,
-        text: string
-    }
-}
+  data: DataTransactionEntry[];
+  transfers: {
+    address: string;
+    amount: TLong;
+    asset: string | null;
+  }[];
+  issues: {
+    assetId: string;
+    name: string;
+    description: string;
+    quantity: TLong;
+    decimals: AssetDecimals;
+    isReissuable: boolean;
+    compiledScript: null | string;
+    nonce: TLong;
+  }[];
+  reissues: {
+    assetId: string;
+    isReissuable: boolean;
+    quantity: TLong;
+  }[];
+  burns: {
+    assetId: string;
+    quantity: TLong;
+  }[];
+  sponsorFees: {
+    assetId: string;
+    minSponsoredAssetFee: TLong;
+  }[];
+  leases: {
+    leaseId: string;
+    recipient: string;
+    amount: TLong;
+  }[];
+  leaseCancels: { leaseId: string }[];
+  invokes: {
+    dApp: string;
+    call: {
+      function: string;
+      args: { type: string; value: string }[];
+    };
+    payment: TPayment[];
+    stateChanges: TStateChanges;
+  }[];
+  error?: {
+    code: number;
+    text: string;
+  };
+};
 
 export interface IWithStateChanges {
-    stateChanges: TStateChanges
+  stateChanges: TStateChanges;
 }
 
 /**
@@ -89,31 +93,34 @@ export interface IWithStateChanges {
  * @param after
  */
 export function fetchStateChangesByAddress(
-    base: string,
-    address: string,
-    limit: number,
-    after?: string,
-    options: RequestInit = Object.create(null)
+  base: string,
+  address: string,
+  limit: number,
+  after?: string,
+  options: RequestInit = Object.create(null),
 ): Promise<Array<Transaction<TLong> & WithId & IWithStateChanges>> {
-    return request({
-        base,
-        url: `/debug/stateChanges/address/${address}/limit/${limit}${query({after})}`,
-        options
-    });
+  return request({
+    base,
+    url: `/debug/stateChanges/address/${address}/limit/${limit}${query({ after })}`,
+    options,
+  });
 }
-
 
 /**
  * Get invokeScript transaction state changes
  * @param base
  * @param txId
  */
-export function fetchStateChangesByTxId(base: string, txId: string, options: RequestInit = Object.create(null)): Promise<Transaction<TLong> & WithId & IWithStateChanges> {
-    return request({
-        base,
-        url: `/debug/stateChanges/info/${txId}`,
-        options
-    });
+export function fetchStateChangesByTxId(
+  base: string,
+  txId: string,
+  options: RequestInit = Object.create(null),
+): Promise<Transaction<TLong> & WithId & IWithStateChanges> {
+  return request({
+    base,
+    url: `/debug/stateChanges/info/${txId}`,
+    options,
+  });
 }
 
 // @TODO need API key:
